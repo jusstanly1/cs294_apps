@@ -4,20 +4,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>CS294 Big Project</title>
+  
+  <!-- Loading Libraries for this project  -->
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+
+  <!--   Style Sheet and Script File -->
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
 </head>
 
+
 <body>
-  Hello world
-  <script src="script.js"></script>
+  <div style="display: stretch">
+  <div id = "zipOptions">
+    
+  </div>
+  <div id="info1">
+    <h1><b>Chicago COVID-19 By ZIP Code</b></h1>
+    <p><b>Data Range: December 2021 - January 2022</b></p>
+    <h2>How have COVID-19 Tests, Deaths, & Cases behaved across particular ZIP Codes?</h2>
+    <p><b>ZIP CODES SELECTED:</b></p>
+    <p>60646 - Least Populated</p>
+    <p>60629 - Most Populated</p>
+    <p>60657 - High Income in HouseHold</p>
+    <p>60653 - Low Income in Household</p>
+  </div>
+  
+  <div id = "userSelect">
+      <p><b>Please select ZIP Codes to create Visualizations. Click Submit to Update.</b></p>
+      
+  </div>  
+  
+  <div id="my_dataviz">
+  </div>
 
- <!--
-  This script places a badge on your repl's full-browser view back to your repl's cover
-  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-  teal, blue, blurple, magenta, pink!
-  -->
-  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script> 
+  <div id = "info2">
+    <h2>How do COVID-19 Tests interact with Cases & Deaths across particular ZIP Codes?</h2>
+  </div>
+  <div id="viz2">
+    
+  </div>
+  <div id="mapDiv">
+    <h2>How has COVID-19 Cases,Tests, & Deaths evolved across the city over time?</h2>
+    <p><b>Please Input Valid Week 1-53</b></p>
+    <input id="weekInput"></input>
+    <button id ="maps">Submit</button>
+    <div id="map"></div>
+  </div>
+</div>
 </body>
-
 </html>
+
+
+<!-- Create an element where the map will take place -->
+
+
+
+
+
+
+<script>
+  
+  
+</script>
+
