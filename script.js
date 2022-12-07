@@ -1,4 +1,10 @@
-var load = d3.json("datav2.json").then(function(data){
+
+// Fetching Data from the Chicago Data Portal
+let covidData = "https://data.cityofchicago.org/api/views/yhhz-zm2v/rows.json";
+
+fetch(covidData)
+  .then((response) => response.json())
+  .then((data) => {
     var zipData = data.data.map(d => ({
       zipCode : d[8],
       weekNum : +d[9],
@@ -488,13 +494,17 @@ var load = d3.json("datav2.json").then(function(data){
       
       // return svg.node()
     }
-    
-    // spatial data starts
 
-    // Chicago projection
+
+
     
-    d3.json("chicago_zipcodes.json").then(
-      function(data) {
+    // Fetching Chicago Map Data to build D3 Maps.
+
+    let chicagoMap = "https://raw.githubusercontent.com/michaeltranxd/UIC-Undergraduate-Research-2019-2020/master/HTML/MyWebsite/topojson/chicago_zipcodes.json";
+
+    fetch(chicagoMap)
+    .then((response) => response.json())
+    .then((data) =>  {
         //aquiring geojson features
         var projection = d3.geoMercator()
         .scale(visWidth * 90)
@@ -633,9 +643,6 @@ var load = d3.json("datav2.json").then(function(data){
 
           // Extracting data to put on the map
           let scaleDef = makeNewObj(data,week,value);
-          //****** ADDING FUNCTIONALITY******TODO
-
-          
           
           //Coloring map based on color
           var data1,data2;
@@ -655,52 +662,21 @@ var load = d3.json("datav2.json").then(function(data){
         
 
         //Idea -> show these results with user being able to decide which week to pull up
-        //Creating 3 maps for week 45
-
-
         document.querySelector("#maps").addEventListener("click", function() {
           createMultMaps();
         });
         
         function createMultMaps(){
           console.log("CLICK")
-
           document.querySelector("#map").innerHTML = "";
-          
           let input = document.body.querySelector("#weekInput").value;
-          
           createMap(zipData,parseInt(input),"casesWeekly");
           createMap(zipData,parseInt(input),"testWeekly");
           createMap(zipData,parseInt(input),"deathWeekly");
-
           console.log("CLICK END");
         }
-      
         console.log("DONE");
-        
-        
-
-        
-        
-        
-        // createMap(zipData,1,"casesWeekly");
-        // createMap(zipData,1,"testWeekly");
-        // createMap(zipData,1,"deathWeekly");
-
-        
       }
     );
-
-    // We want to allow the user to be able to select which zipCodes to plot
-    // 1. We need to go and store all possible ZIPs into an array.
-    // 2. We need to go and create HTML checkboxes for each ZIPCode selection
-    // 3. We also need to create a button that submits the data
-    // 3. We need to add eventListeners for each checkbox that adds them into another array.
-    
-    // 4. We need to add another event listener that is attached to the button & when clicked it takes the array of selected ZIPs and passes that on to create Data.
-    let options = document.querySelector("#zipOptions");
-    // 1.
-    let zipCodeAll = [];
-    
-    
   });
+    
