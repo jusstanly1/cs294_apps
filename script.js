@@ -1,3 +1,6 @@
+// import {MDCFoo, MDCFooFoundation} from '@material/foo';
+// import {MDCFormField} from '@material/form-field';
+// import {MDCCheckbox} from '@material/checkbox';
 
 // Fetching Data from the Chicago Data Portal
 let covidData = "https://data.cityofchicago.org/api/views/yhhz-zm2v/rows.json";
@@ -45,7 +48,24 @@ fetch(covidData)
     var setZIP = new Set(zipPossible);
     console.log(setZIP);
 
-    // STEP 2. Create HTML checkBoxes based on all the zipCodes
+    //  **** HTML Manipulation ****
+    let selectScreen = document.querySelector("#screenSelect");
+    
+    // Start Screen
+    let analysisBtn = document.querySelector("#btnStart");
+    analysisBtn.addEventListener("click", d => {
+
+      // change screens
+      
+      selectScreen.className = "visible";
+
+      let startScreen = document.querySelector("#screenStart");
+      startScreen.className = "invisible"
+      
+    })
+
+    // Screen 2
+    // Create HTML checkBoxes based on all the zipCodes
     let boxes = document.querySelector("#userSelect");
     let textField = document.createElement("p");
     textField.setAttribute("id","select");
@@ -54,7 +74,6 @@ fetch(covidData)
     let btn = document.createElement("button");
     let br = document.createElement("br");
     btn.innerText = "Submit";
-    
     boxes.append(textField);
     boxes.append(btn);
     boxes.append(br);
@@ -62,13 +81,15 @@ fetch(covidData)
     let selectedZIP = [];
     
     let i = 1;
+
     setZIP.forEach(d =>{
+      
       let b = document.createElement("INPUT");
       b.setAttribute("type","checkbox");
       b.setAttribute("id",d);
       
       let l = document.createElement("Label");
-
+  
       b.addEventListener('change', e =>{
         if (e.target.checked){
           selectedZIP.push(e.target.id);
@@ -82,6 +103,8 @@ fetch(covidData)
           console.log(input);
           console.log(selectedZIP);
         }
+
+        
         if (!e.target.checked) {
           selectedZIP.pop(e.target.id);
           console.log(selectedZIP);
@@ -117,13 +140,46 @@ fetch(covidData)
       v1.innerHTML = "";
       let v2 = document.querySelector("#viz2");
       v2.innerHTML = "";
+
+
+      
+      let s1 = document.querySelector("#screen1");
+      let s2 = document.querySelector("#screen2");
+      let map = document.querySelector("#mapDiv");
+      let tabs = document.querySelector("#tabs")
+
+      
+      s1.className = "visible";
+      tabs.className = "visible";
+      selectScreen.className = "invisible";
+
+      let chart1Btn = document.querySelector("#chart1Btn");
+      let chart2Btn = document.querySelector("#chart2Btn");
+      let mapBtn = document.querySelector("#mapBtn");
+
+      chart1Btn.addEventListener("click", d => {
+        s2.className = "invisible";
+        map.className = "invisible";
+        s1.className = "visible";
+      })
+
+      chart2Btn.addEventListener("click", d => {
+        s1.className = "invisible";
+        map.className = "invisible";
+        s2.className = "visible";
+      })
+
+      mapBtn.addEventListener("click", d => {
+        s1.className = "invisible";
+        s2.className = "invisible";
+        map.className = "visible";
+      })
       
       zipSet1 = selectedZIP;
       scatterplotCustom("d.weekNum","d.casesWeekly", x1, y1_0,"Weeks","Weekly Cases", "Chicago COVID-19 Cases Across Weeks","#my_dataviz");
       scatterplotCustom("d.weekNum","d.testWeekly", x1, y1_1,"Weeks","Weekly Tests", "Chicago COVID-19 Tests Across Weeks","#my_dataviz");
       scatterplotCustom("d.weekNum","d.deathWeekly", x1, y1_2,"Weeks","Weekly Deaths", "Chicago COVID-19 Deaths Across Weeks","#my_dataviz");
-      legendScatter(zipSet1,"#my_dataviz")
-  
+      legendScatter(zipSet1,"#my_dataviz");
       scatterplotCustom("d.testWeekly", "d.casesWeekly",  x1_1, y1_0, "Tests", "Cases", "Relationship Between Weekly Cases & Testing","#viz2");
       scatterplotCustom("d.testWeekly", "d.deathWeekly", x1_1, y1_2, "Tests", "Deaths", "Relationship Between Weekly Deaths & Testing","#viz2");
       barChartTest("#viz2")
@@ -136,11 +192,8 @@ fetch(covidData)
     const visWidth = 400;
     const visHeight = 400;
 
-    // ZipCodes to Map
 
-      
-    
-    
+  
 
     // Color Scale
     var zipColor1 = d3.scaleOrdinal().domain(zipSet1).range(d3.schemeCategory10);
@@ -325,7 +378,6 @@ fetch(covidData)
         // return svg.node();
     
     }
-
     function makeNewObj(data, week, value) {
       // Step 1, filter it by Week of interest  
       var weekFilter = zipData.filter(d=> d.weekNum == week) // step 1, filter by week
@@ -378,7 +430,6 @@ fetch(covidData)
       return combineArrays(zip,val)
       //now we have 2 arrays with the zips and values, 
     }
-
     function barChartTest(div) {
     
       // Defining and appending the SVG
@@ -441,59 +492,7 @@ fetch(covidData)
       
       // return svg.node();
       
-    }
-    
-    function barchartPopulation(div) {
-
-      // Defining SVG
-      const svg = d3.select(div).append('svg')
-          .attr('width', visWidth + margin.left + margin.right)
-          .attr('height', visHeight + margin.top + margin.bottom);
-      
-      const g = svg.append('g')
-          .attr("transform", `translate(${margin.left}, ${margin.top})`);
-    
-      //x - axis
-      svg.append("g")
-        .attr("transform", `translate(0, ${visHeight})`)
-        .call(d3.axisBottom(x2))
-        .selectAll("text")
-          .attr("transform", "translate(-10,0)rotate(-45)")
-          .style("text-anchor", "end");
-      
-      const xAxisGroup = g.append("g")
-          .attr("transform", `translate(0, ${visHeight})`);
-      
-      xAxisGroup.append("text")
-          .attr("x", visWidth / 2 - 100)
-          .attr("y", 40)
-          .attr("fill", "black")
-          .attr("text-anchor", "middle")
-          .text("Population");
-    
-      
-      const y_axis = d3.axisLeft(y2_0).tickSize(0);
-      
-      svg.append("g")
-        .call(y_axis)
-        .selectAll("text")
-          .attr("transform", "translate(+40,-30)")
-          .style("text-anchor", "end");
-    
-      
-      
-      // drawing bars
-      svg.selectAll("myRect")
-        .data(zipData.filter(d=> zipSet1.includes(d.zipCode)))
-        .join("rect")
-        .attr("x", x2(0) )
-        .attr("y", d => y2_0(d.zipCode))
-        .attr("width", d => x2(d.population))
-        .attr("height", y2_0.bandwidth())
-        .attr("fill", d =>  zipColor1(d.zipCode))
-      
-      // return svg.node()
-    }
+    }  
 
 
 

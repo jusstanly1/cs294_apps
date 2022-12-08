@@ -20,6 +20,14 @@ html, body {
   fill: yellow;
 }
 
+.invisible {
+  display:none;
+}
+
+.visible{
+  display:block
+}
+
 div.tooltip {   
   position: absolute;
   padding: 7px;
