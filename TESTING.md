@@ -7,8 +7,9 @@ This application is based on my CS424 Final project which
 takes data from the Chicago Data Portal and also utilzes
 Geojson data from a repository.
 
-This application creates visualizations to view COVID data for ZIP Codes
+This application creates visualizations to view COVID-19 data for ZIP Codes
 in the City of Chicago.
+
 
 ## Testing Methods
 I asked my family members to check if the are able to go and acess the link and have it work.
