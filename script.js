@@ -1,13 +1,14 @@
-// import {MDCFoo, MDCFooFoundation} from '@material/foo';
-// import {MDCFormField} from '@material/form-field';
-// import {MDCCheckbox} from '@material/checkbox';
 
 // Fetching Data from the Chicago Data Portal
+
 let covidData = "https://data.cityofchicago.org/api/views/yhhz-zm2v/rows.json";
+
 
 fetch(covidData)
   .then((response) => response.json())
   .then((data) => {
+
+    
     var zipData = data.data.map(d => ({
       zipCode : d[8],
       weekNum : +d[9],
@@ -31,6 +32,10 @@ fetch(covidData)
       point : d[28]
     })).filter(d => d.casesWeekly !== null && d.zipCode !== "Unknown");
 
+    
+    
+
+    // Data is retireved. Storing into indexDB
 
     // STEP 1. Store into Set
     var zipPossible = [];
@@ -57,10 +62,10 @@ fetch(covidData)
 
       // change screens
       
-      selectScreen.className = "visible";
+      selectScreen.className = "center visible";
 
       let startScreen = document.querySelector("#screenStart");
-      startScreen.className = "invisible"
+      startScreen.className = "center invisible"
       
     })
 
@@ -71,9 +76,10 @@ fetch(covidData)
     textField.setAttribute("id","select");
     textField.setAttribute("type","text");
     
-    let btn = document.createElement("button");
+    textField.classList.add("font");
+
+    let btn = document.querySelector("#btnZIP");
     let br = document.createElement("br");
-    btn.innerText = "Submit";
     boxes.append(textField);
     boxes.append(btn);
     boxes.append(br);
@@ -89,6 +95,7 @@ fetch(covidData)
       b.setAttribute("id",d);
       
       let l = document.createElement("Label");
+      l.classList.add("font");
   
       b.addEventListener('change', e =>{
         if (e.target.checked){
@@ -142,37 +149,62 @@ fetch(covidData)
       v2.innerHTML = "";
 
 
-      
+      let userSelect = document.querySelector("#screenSelect")
       let s1 = document.querySelector("#screen1");
       let s2 = document.querySelector("#screen2");
       let map = document.querySelector("#mapDiv");
-      let tabs = document.querySelector("#tabs")
+      let tabs = document.querySelector("#tabs");
+      let menu = document.querySelector("#screenStart");
+      
+      s1.className = "center visible";
+      tabs.className = "center visible";
+      selectScreen.className = "center invisible";
 
       
-      s1.className = "visible";
-      tabs.className = "visible";
-      selectScreen.className = "invisible";
-
+      let screen1Btn = document.querySelector("#screen1Btn")
       let chart1Btn = document.querySelector("#chart1Btn");
       let chart2Btn = document.querySelector("#chart2Btn");
       let mapBtn = document.querySelector("#mapBtn");
+      let mainBtn = document.querySelector("#mainMenu");
 
+      mainBtn.addEventListener("click", d=> {
+        s2.className = "center invisible";
+        map.className = "center invisible";
+        s1.className = "center invisible";
+        userSelect.className = "center invisible";
+        tabs.className = "center invisible";
+        menu.className = "center visible";
+      })
+      
+      screen1Btn.addEventListener("click", d => {
+        s2.className = "center invisible";
+        map.className = "center invisible";
+        s1.className = "center invisible";
+        userSelect.className = "center visible";
+      })
+
+      
       chart1Btn.addEventListener("click", d => {
-        s2.className = "invisible";
-        map.className = "invisible";
-        s1.className = "visible";
+        userSelect.className = "center invisible";
+        s2.className = "center invisible";
+        map.className = "center invisible";
+        s1.className = "center visible";
       })
 
       chart2Btn.addEventListener("click", d => {
-        s1.className = "invisible";
-        map.className = "invisible";
-        s2.className = "visible";
+        userSelect.className = "center invisible";
+        s1.className = "center invisible";
+        map.className = "center invisible";
+        s2.className = "center visible";
       })
 
       mapBtn.addEventListener("click", d => {
-        s1.className = "invisible";
-        s2.className = "invisible";
-        map.className = "visible";
+        
+        userSelect.className = "center invisible";
+        s1.className = "center invisible";
+        s2.className = "center invisible";
+        map.className = "center visible";
+        
       })
       
       zipSet1 = selectedZIP;

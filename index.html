@@ -18,68 +18,75 @@
   <!--   Material Components for the Web Resources -->
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+  <!--   IndexDB with Dexie -->
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+
+  
+  <link rel="manifest" href="manifest.json" />
 </head>
 
 
 <body>
-  <div id="screenStart" class ="visible">
-    <h1>Welcome to the Chicago COVID-19 Analysis Tool</h1>
-    <button id="btnStart">Begin Analysis</button>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+
+  
+  <div id="screenStart" class ="center visible">
+    <header class="mdc-top-app-bar">
+      <div class=" mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+          <p class="mdc-top-app-bar__title">Chicago COVID-19 Analysis Tool</p>
+        </section>
+      </div>
+    </header>
+    
+    <h1 class="font">Welcome to the Chicago COVID-19 Analysis Tool</h1>
+    
+    <button  id ="btnStart" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__label">Begin Analysis</span>
+    </button>
   </div>
 
-  <div id="screenSelect" class="invisible">
-    <div id = "userSelect">
-      <p><b>Please select ZIP Codes to create Visualizations. Click Submit to Update.</b></p>
-    </div> 
-  </div>
+  
 
   
   <div style="display: stretch">
-  
-<!--   <div id="info1">
-    <h1><b>Chicago COVID-19 By ZIP Code</b></h1>
-    <p><b>Data Range: December 2021 - January 2022</b></p>
-    <h2>How have COVID-19 Tests, Deaths, & Cases behaved across particular ZIP Codes?</h2>
-    <p><b>ZIP CODES SELECTED:</b></p>
-
-    <p>60646 - Least Populated</p>
-    <p>60629 - Most Populated</p>
-    <p>60657 - High Income in HouseHold</p>
-    <p>60653 - Low Income in Household</p>
-  </div> -->
-  <div class= "invisible">
-    <!--     CheckBoxes -->
-
-      <!--       FormField -->
-      <div id="mdc1" class="mdc-form-field">
-        <div class="mdc-checkbox">
-          <input type="checkbox"
-                 class="mdc-checkbox__native-control"
-                 id="checkbox-1"/>
-          <div class="mdc-checkbox__background">
-            <svg class="mdc-checkbox__checkmark"
-                 viewBox="0 0 24 24">
-              <path class="mdc-checkbox__checkmark-path"
-                    fill="none"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-            </svg>
-            <div class="mdc-checkbox__mixedmark"></div>
-          </div>
-          <div class="mdc-checkbox__ripple"></div>
-        </div>
-        <label id="label1" for="checkbox-1">Checkbox 1</label>
-      </div>
-    </div>
 
     
   </div>
   
-
-  <div id="tabs" class = "invisible">
+  <div id="tabs" class = "center invisible ">
     <div class="mdc-tab-bar" role="tablist">
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area">
           <div class="mdc-tab-scroller__scroll-content">
+  
+            <button id="mainMenu" class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true"></span>
+                <span class="mdc-tab__text-label">Main Menu</span>
+              </span>
+              <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
+            
+            <button id="screen1Btn" class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true"></span>
+                <span class="mdc-tab__text-label">Select ZIP Codes</span>
+              </span>
+              <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
             
             <button id="chart1Btn" class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
@@ -101,8 +108,9 @@
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple"></span>
-              
-              <button id="mapBtn" class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+            </button>
+            
+            <button id="mapBtn" class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__icon material-icons" aria-hidden="true"></span>
                 <span class="mdc-tab__text-label">Map</span>
@@ -112,14 +120,25 @@
               </span>
               <span class="mdc-tab__ripple"></span>
             </button>
-            </button>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
+
   
-  <div id= "screen1" class="invisible">
+  <div id="screenSelect" class="center invisible">
+    <div id = "userSelect">
+      <p class="font"><b>Please select ZIP Codes to create Visualizations. Click Submit to Update.</b></p>
+    </div>
+    <button  id ="btnZIP" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__label">Submit</span>
+    </button>
+  </div>
+  
+  
+  <div id= "screen1" class="center invisible">
     <div id="my_dataviz"></div>
   </div>
 
@@ -127,12 +146,25 @@
     <div id="viz2"></div>
   </div>
   
-  <div id="mapDiv" class="invisible">
+  <div id="mapDiv" class="center invisible">
     
-    <h2>How has COVID-19 Cases,Tests, & Deaths evolved across the city over time?</h2>
-    <p><b>Please Input Valid Week 1-53</b></p>
-    <input id="weekInput"></input>
-    <button id ="maps">Submit</button>
+    <h2 class="font">How have COVID-19 Cases,Tests, & Deaths evolved across the city over time?</h2>
+    <p class="font"><b>Please Input Valid Week 1-53</b></p>
+<!--     <input id="weekInput"></input> -->
+
+    
+    <label class="mdc-text-field mdc-text-field--filled">
+      <span class="mdc-text-field__ripple"></span>
+      <span class="mdc-floating-label" id="my-label-id"></span>
+      <input id="weekInput" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+      <span class="mdc-line-ripple"></span>
+    </label>
+    <button  id = "maps" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__label">Submit</span>
+    </button>
+    
+    
+<!--       <button class = "font" id ="maps">Submit</button> -->
     
     <div id="map"></div>
   </div>

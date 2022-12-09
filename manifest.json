@@ -1,0 +1,13 @@
+{
+  "name": "COVID-Analysis App",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
+  "display": "fullscreen",
+  "scope": "/",
+  "start_url": "/index.html",
+  "icons": [{
+      "src": "./icon32.png",
+      "sizes": "500x500",
+      "type": "image/png"
+  }]
+}
