@@ -10,7 +10,9 @@ var cacheFiles = [
 	'./',
   './index.html',
   './style.css',
-  
+  './icon32.png',
+  './manifest.json',
+  './sw.js',
   'https://data.cityofchicago.org/api/views/yhhz-zm2v/rows.json',
   'https://raw.githubusercontent.com/michaeltranxd/UIC-Undergraduate-Research-2019-2020/master/HTML/MyWebsite/topojson/chicago_zipcodes.json',
 	'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic'

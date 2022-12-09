@@ -167,6 +167,13 @@ fetch(covidData)
       let mapBtn = document.querySelector("#mapBtn");
       let mainBtn = document.querySelector("#mainMenu");
 
+
+      mainBtn.addEventListener("mouseover", d=> {
+        let utterance = new SpeechSynthesisUtterance("Main Menu");
+        speechSynthesis.speak(utterance);
+      })
+      
+      
       mainBtn.addEventListener("click", d=> {
         s2.className = "center invisible";
         map.className = "center invisible";
@@ -175,14 +182,25 @@ fetch(covidData)
         tabs.className = "center invisible";
         menu.className = "center visible";
       })
+
       
+      screen1Btn.addEventListener("mouseover", d=> {
+        let utterance = new SpeechSynthesisUtterance("Select ZIP Codes");
+        speechSynthesis.speak(utterance);
+      })
       screen1Btn.addEventListener("click", d => {
         s2.className = "center invisible";
         map.className = "center invisible";
         s1.className = "center invisible";
         userSelect.className = "center visible";
+        
       })
-
+      
+      
+      chart1Btn.addEventListener("mouseover", d=> {
+        let utterance = new SpeechSynthesisUtterance("Chart 1");
+        speechSynthesis.speak(utterance);
+      })
       
       chart1Btn.addEventListener("click", d => {
         userSelect.className = "center invisible";
@@ -191,20 +209,31 @@ fetch(covidData)
         s1.className = "center visible";
       })
 
+      
+      chart2Btn.addEventListener("mouseover", d=> {
+        let utterance = new SpeechSynthesisUtterance("Chart 2");
+        speechSynthesis.speak(utterance);
+      })
+      
       chart2Btn.addEventListener("click", d => {
         userSelect.className = "center invisible";
         s1.className = "center invisible";
         map.className = "center invisible";
         s2.className = "center visible";
       })
-
+      
+      mapBtn.addEventListener("mouseover", d=> {
+        let utterance = new SpeechSynthesisUtterance("Map");
+        speechSynthesis.speak(utterance);
+      })
+      
+      
       mapBtn.addEventListener("click", d => {
         
         userSelect.className = "center invisible";
         s1.className = "center invisible";
         s2.className = "center invisible";
         map.className = "center visible";
-        
       })
       
       zipSet1 = selectedZIP;
