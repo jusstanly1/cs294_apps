@@ -5,7 +5,7 @@ meet the requirements set by the assignment.
 
 This application is based on my CS424 Final project which 
 takes data from the Chicago Data Portal and also utilzes
-Geojson data from a repository to create a map.
+Geojson data from a repository.
 
 This application creates visualizations to view COVID data for ZIP Codes
 in the City of Chicago.
