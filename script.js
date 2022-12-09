@@ -1,6 +1,31 @@
-
+const date = new Date();
+var db = new Dexie("WebAccessDate");
+        
+        
+    db.version(1).stores({
+      dates: "++id"
+    });
+    
+    db.dates.bulkPut([
+      {date}
+    ]);
+    
+    
+    let dateUI = document.querySelector("#date");
+    
+    const displayNotes = () => {
+      db.dates.toArray()
+        .then(arr => {
+          arr.forEach(date => {
+          dateUI.innerHTML = date.date;
+        });
+      })
+      .catch(err => console.log(error))
+      console.log("TEST Dexie");
+    }
+    
+    displayNotes();
 // Fetching Data from the Chicago Data Portal
-
 let covidData = "https://data.cityofchicago.org/api/views/yhhz-zm2v/rows.json";
 
 
